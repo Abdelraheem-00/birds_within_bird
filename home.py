@@ -8,7 +8,7 @@ pygame.init()
 screen = pygame.display.set_mode((1200, 900), pygame.RESIZABLE)
 pygame.display.set_caption("Birds within Bird")
 
-background_image = pygame.image.load("main_assets/back.jpg") 
+background_image = pygame.image.load("main_assets/mmm.jpg") 
 button_hover_sound = pygame.mixer.Sound("main_assets/tunetank.com_select-option.wav") 
 button_click_sound = pygame.mixer.Sound("main_assets/tunetank.com_menu-option-hover.wav") 
 
@@ -76,7 +76,7 @@ def main_menu():
 
         # Menu text
         menu_font = pygame.font.Font("freesansbold.ttf", 70)
-        menu_text = menu_font.render("Birds within Bird", True, "#b68f40")
+        menu_text = menu_font.render("Birds within Bird", True, "#ffffff")
         menu_rect = menu_text.get_rect(center=(screen_width // 2, screen_height // 6))
         screen.blit(menu_text, menu_rect)
 
