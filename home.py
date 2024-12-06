@@ -12,6 +12,11 @@ background_image = pygame.image.load("main_assets/mmm.jpg")
 button_hover_sound = pygame.mixer.Sound("main_assets/tunetank.com_select-option.wav") 
 button_click_sound = pygame.mixer.Sound("main_assets/tunetank.com_menu-option-hover.wav") 
 
+def load_music():
+    song1 = 'main_assets/vivaldi.mp3'
+    pygame.mixer.music.load(song1)
+    pygame.mixer.music.play(-1)
+
 
 class Button:
     def __init__(self, image_path, size=None, hover_scale=1.1):
@@ -27,7 +32,7 @@ class Button:
         self.hovered = False
 
     def draw(self, screen, mouse_pos, pos):
-        self.rect.center = pos  # Update position dynamically
+        self.rect.center = pos 
         if self.rect.collidepoint(mouse_pos):
             if not self.hovered:
                 pygame.mixer.Sound.play(button_hover_sound)
@@ -47,6 +52,7 @@ class Button:
 # def run_bird_file():
 #     pygame.mixer.Sound.play(button_click_sound)
 #     os.system("python3.10 main.py")
+load_music()
 
 
 def run_pacman_file():

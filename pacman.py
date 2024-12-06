@@ -7,7 +7,7 @@ import copy
 pygame.init()
 WIDTH = 900
 HEIGHT = 950
-screen = pygame.display.set_mode([WIDTH, HEIGHT], pygame.RESIZABLE)
+screen = pygame.display.set_mode([WIDTH, HEIGHT])
 pygame.display.set_caption("Pac-Man")
 timer = pygame.time.Clock()
 fps = 60
@@ -177,251 +177,256 @@ class Ghost:
             return self.turns, self.in_box
 
     def move_clyde(self):
-            if self.direction == 0:
-                if self.target[0] > self.x_pos and self.turns[0]:
-                    self.x_pos += self.speed
-                elif not self.turns[0]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    elif self.target[0] < self.x_pos and self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                    elif self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-
-                    elif self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                elif self.turns[0]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    if self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    else:
-                        self.x_pos += self.speed
-            elif self.direction == 1:
+        # r, l, u, d
+        # clyde is going to turn whenever advantageous for pursuit
+        if self.direction == 0:
+            if self.target[0] > self.x_pos and self.turns[0]:
+                self.x_pos += self.speed
+            elif not self.turns[0]:
                 if self.target[1] > self.y_pos and self.turns[3]:
                     self.direction = 3
+                    self.y_pos += self.speed
+                elif self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
                 elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
                     self.x_pos -= self.speed
-                elif not self.turns[1]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    elif self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                    elif self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    elif self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
                 elif self.turns[1]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    if self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    else:
-                        self.x_pos -= self.speed
-            elif self.direction == 2:
-                if self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+            elif self.turns[0]:
+                if self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                if self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                else:
+                    self.x_pos += self.speed
+        elif self.direction == 1:
+            if self.target[1] > self.y_pos and self.turns[3]:
+                self.direction = 3
+            elif self.target[0] < self.x_pos and self.turns[1]:
+                self.x_pos -= self.speed
+            elif not self.turns[1]:
+                if self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+            elif self.turns[1]:
+                if self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                if self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                else:
+                    self.x_pos -= self.speed
+        elif self.direction == 2:
+            if self.target[0] < self.x_pos and self.turns[1]:
+                self.direction = 1
+                self.x_pos -= self.speed
+            elif self.target[1] < self.y_pos and self.turns[2]:
+                self.direction = 2
+                self.y_pos -= self.speed
+            elif not self.turns[2]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+            elif self.turns[2]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                else:
+                    self.y_pos -= self.speed
+        elif self.direction == 3:
+            if self.target[1] > self.y_pos and self.turns[3]:
+                self.y_pos += self.speed
+            elif not self.turns[3]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
                     self.direction = 1
                     self.x_pos -= self.speed
                 elif self.target[1] < self.y_pos and self.turns[2]:
                     self.direction = 2
                     self.y_pos -= self.speed
-                elif not self.turns[2]:
-                    if self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                    elif self.target[0] < self.x_pos and self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                    elif self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                    elif self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
                 elif self.turns[2]:
-                    if self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                    elif self.target[0] < self.x_pos and self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                    else:
-                        self.y_pos -= self.speed
-            elif self.direction == 3:
-                if self.target[1] > self.y_pos and self.turns[3]:
-                    self.y_pos += self.speed
-                elif not self.turns[3]:
-                    if self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                elif self.target[0] < self.x_pos and self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                elif self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                elif self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                elif self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                elif self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                elif self.turns[3]:
-                    if self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                    elif self.target[0] < self.x_pos and self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                    else:
-                        self.y_pos += self.speed
-            if self.x_pos < -30:
-                self.x_pos = 900
-            elif self.x_pos > 900:
-                self.x_pos - 30
-            return self.x_pos, self.y_pos, self.direction
-
-
-    def move_blinky(self):
-            if self.direction == 0:
-                if self.target[0] > self.x_pos and self.turns[0]:
-                    self.x_pos += self.speed
-                elif not self.turns[0]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    elif self.target[0] < self.x_pos and self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                    elif self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed       
-                elif self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                elif self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                elif self.turns[0]:
-                    self.x_pos += self.speed
-            elif self.direction == 1:
-                if self.target[0] < self.x_pos and self.turns[1]:
-                    self.x_pos -= self.speed
-                elif not self.turns[1]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    elif self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                    elif self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed  
-            elif self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-            elif self.turns[1]:
-                    self.x_pos -= self.speed
-            elif self.direction == 2:
-                if self.target[1] < self.y_pos and self.turns[2]:
                     self.direction = 2
                     self.y_pos -= self.speed
-                elif not self.turns[2]:
-                    if self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                    elif self.target[0] < self.x_pos and self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                    elif self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed   
                 elif self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                elif self.turns[2]:
-                    self.y_pos -= self.speed
-            elif self.direction == 3:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+            elif self.turns[3]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                else:
+                    self.y_pos += self.speed
+        if self.x_pos < -30:
+            self.x_pos = 900
+        elif self.x_pos > 900:
+            self.x_pos - 30
+        return self.x_pos, self.y_pos, self.direction
+    
+    
+    
+    
+    def move_blinky(self):
+        # r, l, u, d
+        # blinky is going to turn whenever colliding with walls, otherwise continue straight
+        if self.direction == 0:
+            if self.target[0] > self.x_pos and self.turns[0]:
+                self.x_pos += self.speed
+            elif not self.turns[0]:
                 if self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
                     self.y_pos += self.speed
-                elif not self.turns[3]:
-                    if self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                    elif self.target[0] < self.x_pos and self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed
-                    elif self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    elif self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    elif self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                    elif self.turns[1]:
-                        self.direction = 1
-                        self.x_pos -= self.speed   
+                elif self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
                 elif self.turns[3]:
+                    self.direction = 3
                     self.y_pos += self.speed
-            if self.x_pos < -30:
-                self.x_pos = 900
-            elif self.x_pos > 900:
-                self.x_pos - 30
-            return self.x_pos, self.y_pos, self.direction
+                elif self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+            elif self.turns[0]:
+                self.x_pos += self.speed
+        elif self.direction == 1:
+            if self.target[0] < self.x_pos and self.turns[1]:
+                self.x_pos -= self.speed
+            elif not self.turns[1]:
+                if self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+            elif self.turns[1]:
+                self.x_pos -= self.speed
+        elif self.direction == 2:
+            if self.target[1] < self.y_pos and self.turns[2]:
+                self.direction = 2
+                self.y_pos -= self.speed
+            elif not self.turns[2]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+            elif self.turns[2]:
+                self.y_pos -= self.speed
+        elif self.direction == 3:
+            if self.target[1] > self.y_pos and self.turns[3]:
+                self.y_pos += self.speed
+            elif not self.turns[3]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+            elif self.turns[3]:
+                self.y_pos += self.speed
+        if self.x_pos < -30:
+            self.x_pos = 900
+        elif self.x_pos > 900:
+            self.x_pos - 30
+        return self.x_pos, self.y_pos, self.direction
 
 
 
-
+   
     def move_inky(self):
         # r, l, u, d
         # inky turns up or down at any point to pursue, but left and right only on collision
@@ -543,10 +548,11 @@ class Ghost:
         elif self.x_pos > 900:
             self.x_pos - 30
         return self.x_pos, self.y_pos, self.direction
-    
-    
+
+
     
   
+
     def move_pinky(self):
         # r, l, u, d
         # inky is going to turn left or right whenever advantageous, but only up or down on collision
@@ -672,13 +678,51 @@ class Ghost:
             self.x_pos - 30
         return self.x_pos, self.y_pos, self.direction
 
+
+        
+def draw_misc():
+    score_text = font.render(f'Score: {score}', True, 'white')
+    screen.blit(score_text, (10, 920))
+    if powerup:
+        pygame.draw.circle(screen, 'blue', (140, 930), 15)
+    for i in range(lives):
+        screen.blit(pygame.transform.scale(player_images[0], (30, 30)), (650 + i * 40, 915))
+    
+    if game_over:
+        pygame.draw.rect(screen, 'white', [50, 200, 800, 300], 0, 10)
+        pygame.draw.rect(screen, 'dark gray', [70, 220, 760, 260], 0, 10)
+        gameover_text = font.render('Game over! Space bar to restart!', True, 'red')
+        screen.blit(gameover_text, (100, 300))
+
+    if game_won:
+        pygame.draw.rect(screen, 'white', [50, 200, 800, 300], 0, 10)
+        pygame.draw.rect(screen, 'dark gray', [70, 220, 760, 260], 0, 10)
+        gamewon_text = font.render('Victory! Space bar to restart!', True, 'green')
+        screen.blit(gamewon_text, (100, 300))
+
+
+def check_collisions(scor, power, power_count, eaten_ghosts):
+    num1 = (HEIGHT - 50) // 32
+    num2 = WIDTH // 30
+    if 0 < player_x < 870:
+        if level[center_y // num1][center_x // num2] == 1:
+            level[center_y // num1][center_x // num2] = 0
+            scor += 10
+        if level[center_y // num1][center_x // num2] == 2:
+            level[center_y // num1][center_x // num2] = 0
+            scor += 50
+            power = True
+            power_count = 0
+            eaten_ghosts = [False, False, False, False]
+    return scor, power, power_count, eaten_ghosts
+
 def draw_board():
     num1 = ((HEIGHT - 50) // 32)
     num2 = (WIDTH // 30)
-    is_maximized = WIDTH > 800
-    top_padding = 20 
-    x_offset = (WIDTH - (30 * num2)) // 2
-    y_offset = (HEIGHT - (32 * num1)) // 2
+    # is_maximized = WIDTH > 800
+    # top_padding = 20 
+    # x_offset = (WIDTH - (30 * num2)) // 2
+    # y_offset = (HEIGHT - (32 * num1)) // 2
     for i in range(len(level)):
         for j in range(len(level[i])):
             if level[i][j] == 1:
@@ -707,11 +751,10 @@ def draw_board():
             if level[i][j] == 9:
                 pygame.draw.line(screen, 'white', (j * num2, i * num1 + (0.5 * num1)),
                                  (j * num2 + num2, i * num1 + (0.5 * num1)), 3)
-    board_width = 30 * num2   
-    board_height = 32 * num1 + 20
+    # board_width = 30 * num2   
+    # board_height = 32 * num1 + 20
     # pygame.draw.rect(screen, 'white', (x_offset, y_offset - top_padding, board_width, board_height), 3)  
 
-            
 
 def draw_player():
     if direction == 0:
@@ -723,38 +766,8 @@ def draw_player():
     elif direction == 3:
         screen.blit(pygame.transform.rotate(player_images[counter // 5], 270), (player_x, player_y))
         
-
-def draw_misc():
-    score_text = font.render(f'score: {score}', True, 'white')
-    screen.blit(score_text, (10, 920))
-    if powerup:
-        pygame.draw.circle(screen, 'blue', (140, 930), 15)
-    for i in range(lives):
-        screen.blit(pygame.transform.scale(player_images[0], (30, 30)), (650 + 1 * 40, 915))
-    if game_over:
-        pygame.draw.rect(screen, 'white', [50, 200, 800, 300], 0, 10)
-        pygame.draw.rect(screen, 'dark gray', [70, 220, 760, 260], 0, 10)
-        gameover_text = font.render('game over! space bar to restart')
-        screen.blit(gameover_text, (100, 300))
         
         
-
-def check_collisions(scor, power, power_count, eaten_ghosts):
-    num1 = (HEIGHT - 50) // 32
-    num2 = WIDTH // 30
-    if 0 < player_x < 870:
-        if level[center_y // num1][center_x // num2] == 1:
-            level[center_y // num1][center_x // num2] = 0
-            scor += 10
-        if level[center_y // num1][center_x // num2] == 2:
-            level[center_y // num1][center_x // num2] = 0
-            scor += 50
-            power = True
-            power_count = 0
-            eaten_ghosts = [False, False, False, False]
-    return scor, power, power_count, eaten_ghosts
-
-
 def check_position(centerx, centery):
     turns = [False, False, False, False]
     num1 = (HEIGHT - 50) // 32
@@ -803,6 +816,19 @@ def check_position(centerx, centery):
 
     return turns
 
+
+def move_player(player_x, player_y, direction, turns_allowed, player_speed):
+   
+    if direction == 0 and turns_allowed[0]: 
+        player_x += player_speed
+    elif direction == 1 and turns_allowed[1]:  
+        player_x -= player_speed
+    if direction == 2 and turns_allowed[2]:  
+        player_y -= player_speed
+    elif direction == 3 and turns_allowed[3]:  
+        player_y += player_speed
+        
+    return player_x, player_y
 
 
 
@@ -887,18 +913,7 @@ def get_targets(blink_x, blink_y, ink_x, ink_y, pink_x, pink_y, clyd_x, clyd_y):
         
 
 
-def move_player(player_x, player_y, direction, turns_allowed, player_speed):
-   
-    if direction == 0 and turns_allowed[0]: 
-        player_x += player_speed
-    elif direction == 1 and turns_allowed[1]:  
-        player_x -= player_speed
-    if direction == 2 and turns_allowed[2]:  
-        player_y -= player_speed
-    elif direction == 3 and turns_allowed[3]:  
-        player_y += player_speed
-        
-    return player_x, player_y
+
 
 
 
@@ -909,7 +924,7 @@ while run:
     
     if counter < 19:
         counter += 1
-        if counter > 4:
+        if counter > 3:
             flicker = False
     else:
         counter = 0
@@ -920,7 +935,7 @@ while run:
         power_counter = 0
         powerup = False
         eaten_ghost = [False, False, False, False]
-        startup_counter = 0 
+        # startup_counter = 0 
     if startup_counter < 180 and not game_over and not game_won:
         moving = False
         startup_counter += 1
@@ -971,7 +986,6 @@ while run:
 
 
     # pygame.draw.cicle(screen, 'white', (center))
-    turns_allowed = check_position(center_x, center_y)
     player_circle = pygame.draw.circle(screen, 'white', (center_x, center_y), 23, 1)
     draw_player()
     blinky = Ghost(blinky_x, blinky_y, targets[0], ghost_speeds[0], blinky_img, blinky_direction, blinky_dead,
@@ -985,6 +999,7 @@ while run:
     draw_misc()
     targets = get_targets(blinky_x, blinky_y, inky_x, inky_y, pinky_x, pinky_y, clyde_x, clyde_y)
 
+    turns_allowed = check_position(center_x, center_y)
     
     if moving:
         player_x, player_y = move_player(player_x, player_y, direction, turns_allowed, player_speed)
@@ -1006,187 +1021,18 @@ while run:
             
         clyde_x, clyde_y, clyde_direction = clyde.move_clyde()
         
+    score, powerup, power_counter, eaten_ghost = check_collisions(score, powerup, power_counter, eaten_ghost)
+        
     if not powerup:
         if (player_circle.colliderect(blinky.rect) and not blinky.dead) or \
             (player_circle.colliderect(inky.rect) and not inky.dead) or \
             (player_circle.colliderect(pinky.rect) and not pinky.dead) or \
             (player_circle.colliderect(clyde.rect) and not clyde.dead):
             if lives > 0: 
-                lives -=  1
-                startup_counter = 0
-                player_x = 450
-                player_y = 663
-                direction = 0
-                direction_command = 0
-                blinky_x = 56  
-                blinky_y = 58
-                inky_x = 440
-                inky_y = 388
-                pinky_x = 440
-                pinky_y = 438
-                clyde_x = 440
-                clyde_y = 438
-                blinky_direction = 0
-                inky_direction = 2
-                pinky_direction = 2
-                clyde_direction = 2
-                eaten_ghost = [False, False, False, False]
-                blinky_dead = False
-                inky_dead = False
-                clyde_dead = False
-                pinky_dead = False
-
-    if powerup and player_circle.colliderect(blinky.rect) and not blinky.dead and not eaten_ghost[0]:
-        blinky_dead = True
-        eaten_ghost[0] = True
-    if powerup and player_circle.colliderect(inky.rect) and not inky.dead and not eaten_ghost[1]:
-        inky_dead = True
-        eaten_ghost[1] = True
-    if powerup and player_circle.colliderect(pinky.rect) and not pinky.dead and not eaten_ghost[2]:
-        pinky_dead = True
-        eaten_ghost[2] = True
-    if powerup and player_circle.colliderect(clyde.rect) and not clyde.dead and not eaten_ghost[3]:
-        clyde_dead = True
-        eaten_ghost[3] = True
-    
-    if powerup and player_circle.colliderect(blinky.rect) and not blinky.dead and eaten_ghost[0]:
-        if lives > 0: 
-            lives -=  1
-            startup_counter = 0
-            player_x = 450
-            player_y = 663
-            direction = 0
-            direction_command = 0
-            blinky_x = 56  
-            blinky_y = 58
-            inky_x = 440
-            inky_y = 388
-            pinky_x = 440
-            pinky_y = 438
-            clyde_x = 440
-            clyde_y = 438
-            blinky_direction = 0
-            inky_direction = 2
-            pinky_direction = 2
-            clyde_direction = 2
-            eaten_ghost = [False, False, False, False]
-            blinky_dead = False
-            inky_dead = False
-            clyde_dead = False
-            pinky_dead = False
-    if powerup and player_circle.colliderect(inky.rect) and not inky.dead and eaten_ghost[1]:
-        if lives > 0: 
-            lives -=  1
-            startup_counter = 0
-            player_x = 450
-            player_y = 663
-            direction = 0
-            direction_command = 0
-            blinky_x = 56  
-            blinky_y = 58
-            inky_x = 440
-            inky_y = 388
-            pinky_x = 440
-            pinky_y = 438
-            clyde_x = 440
-            clyde_y = 438
-            blinky_direction = 0
-            inky_direction = 2
-            pinky_direction = 2
-            clyde_direction = 2
-            eaten_ghost = [False, False, False, False]
-            blinky_dead = False
-            inky_dead = False
-            clyde_dead = False
-            pinky_dead = False
-    if powerup and player_circle.colliderect(pinky.rect) and not pinky.dead and eaten_ghost[2]:
-        if lives > 0: 
-            lives -=  1
-            startup_counter = 0
-            player_x = 450
-            player_y = 663
-            direction = 0
-            direction_command = 0
-            blinky_x = 56  
-            blinky_y = 58
-            inky_x = 440
-            inky_y = 388
-            pinky_x = 440
-            pinky_y = 438
-            clyde_x = 440
-            clyde_y = 438
-            blinky_direction = 0
-            inky_direction = 2
-            pinky_direction = 2
-            clyde_direction = 2
-            eaten_ghost = [False, False, False, False]
-            blinky_dead = False
-            inky_dead = False
-            clyde_dead = False
-            pinky_dead = False
-    if powerup and player_circle.colliderect(clyde.rect) and not clyde.dead and eaten_ghost[3]:
-        if lives > 0: 
-            lives -=  1
-            startup_counter = 0
-            player_x = 450
-            player_y = 663
-            direction = 0
-            direction_command = 0
-            blinky_x = 56  
-            blinky_y = 58
-            inky_x = 440
-            inky_y = 388
-            pinky_x = 440
-            pinky_y = 438
-            clyde_x = 440
-            clyde_y = 438
-            blinky_direction = 0
-            inky_direction = 2
-            pinky_direction = 2
-            clyde_direction = 2
-            eaten_ghost = [False, False, False, False]
-            blinky_dead = False
-            inky_dead = False
-            clyde_dead = False
-            pinky_dead = False
-    if powerup and player_circle.colliderect(blinky.rect) and not blinky.dead and not eaten_ghost[0]:
-        blinky_dead = True
-        eaten_ghost[0] = True
-        score += (2 ** eaten_ghost.count(True)) * 100
-    if powerup and player_circle.colliderect(inky.rect) and not inky.dead and not eaten_ghost[1]:
-        inky_dead = True
-        eaten_ghost[1] = True
-        score += (2 ** eaten_ghost.count(True)) * 100
-    if powerup and player_circle.colliderect(pinky.rect) and not pinky.dead and not eaten_ghost[2]:
-        pinky_dead = True
-        eaten_ghost[2] = True
-        score += (2 ** eaten_ghost.count(True)) * 100
-    if powerup and player_circle.colliderect(clyde.rect) and not clyde.dead and not eaten_ghost[3]:
-        clyde_dead = True
-        eaten_ghost[3] = True
-        score += (2 ** eaten_ghost.count(True)) * 100
-        
-        
-    score, powerup, power_counter, eaten_ghost = check_collisions(score, powerup, power_counter, eaten_ghost)
-        
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
-                direction_command = 0
-            if event.key == pygame.K_LEFT:
-                direction_command = 1
-            if event.key == pygame.K_UP:
-                direction_command = 2
-            if event.key == pygame.K_DOWN:
-                direction_command = 3
-            if event.key == pygame.K_SPACE and (game_over or game_won):
-                powerup = False
-                power_counter = 0
                 lives -= 1
                 startup_counter = 0
+                powerup = False
+                power_counter = 0
                 player_x = 450
                 player_y = 663
                 direction = 0
@@ -1208,11 +1054,213 @@ while run:
                 inky_dead = False
                 clyde_dead = False
                 pinky_dead = False
-                score = 0
-                lives = 3
-                level = copy.deepcopy(boards)
+            else:
                 game_over = False
-                game_won = False
+                moving = False
+                startup_counter = 0
+
+    # if powerup and player_circle.colliderect(blinky.rect) and not blinky.dead and not eaten_ghost[0]:
+    #     blinky_dead = True
+    #     eaten_ghost[0] = True
+    # if powerup and player_circle.colliderect(inky.rect) and not inky.dead and not eaten_ghost[1]:
+    #     inky_dead = True
+    #     eaten_ghost[1] = True
+    # if powerup and player_circle.colliderect(pinky.rect) and not pinky.dead and not eaten_ghost[2]:
+    #     pinky_dead = True
+    #     eaten_ghost[2] = True
+    # if powerup and player_circle.colliderect(clyde.rect) and not clyde.dead and not eaten_ghost[3]:
+    #     clyde_dead = True
+    #     eaten_ghost[3] = True
+    
+    if powerup and player_circle.colliderect(blinky.rect) and eaten_ghost[0] and not blinky.dead:
+        if lives > 0: 
+            powerup = False
+            power_counter = 0
+            lives -= 1
+            startup_counter = 0
+            player_x = 450
+            player_y = 663
+            direction = 0
+            direction_command = 0
+            blinky_x = 56
+            blinky_y = 58
+            blinky_direction = 0
+            inky_x = 440
+            inky_y = 388
+            inky_direction = 2
+            pinky_x = 440
+            pinky_y = 438
+            pinky_direction = 2
+            clyde_x = 440
+            clyde_y = 438
+            clyde_direction = 2
+            eaten_ghost = [False, False, False, False]
+            blinky_dead = False
+            inky_dead = False
+            clyde_dead = False
+            pinky_dead = False
+        else:
+            game_over = True
+            moving = False
+            startup_counter = 0
+    if powerup and player_circle.colliderect(inky.rect) and eaten_ghost[1] and not inky.dead :
+        if lives > 0: 
+            powerup = False
+            power_counter = 0
+            lives -= 1
+            startup_counter = 0
+            player_x = 450
+            player_y = 663
+            direction = 0
+            direction_command = 0
+            blinky_x = 56
+            blinky_y = 58
+            blinky_direction = 0
+            inky_x = 440
+            inky_y = 388
+            inky_direction = 2
+            pinky_x = 440
+            pinky_y = 438
+            pinky_direction = 2
+            clyde_x = 440
+            clyde_y = 438
+            clyde_direction = 2
+            eaten_ghost = [False, False, False, False]
+            blinky_dead = False
+            inky_dead = False
+            clyde_dead = False
+            pinky_dead = False
+        else:
+            game_over = True
+            moving = False
+            startup_counter = 0
+    if powerup and player_circle.colliderect(pinky.rect) and eaten_ghost[2] and not pinky.dead :
+        if lives > 0: 
+            powerup = False
+            power_counter = 0
+            lives -= 1
+            startup_counter = 0
+            player_x = 450
+            player_y = 663
+            direction = 0
+            direction_command = 0
+            blinky_x = 56
+            blinky_y = 58
+            blinky_direction = 0
+            inky_x = 440
+            inky_y = 388
+            inky_direction = 2
+            pinky_x = 440
+            pinky_y = 438
+            pinky_direction = 2
+            clyde_x = 440
+            clyde_y = 438
+            clyde_direction = 2
+            eaten_ghost = [False, False, False, False]
+            blinky_dead = False
+            inky_dead = False
+            clyde_dead = False
+            pinky_dead = False
+        else:
+            game_over = True
+            moving = False
+            startup_counter = 0
+    if powerup and player_circle.colliderect(clyde.rect) and eaten_ghost[3] and not clyde.dead :
+        if lives > 0: 
+            powerup = False
+            power_counter = 0
+            lives -= 1
+            startup_counter = 0
+            player_x = 450
+            player_y = 663
+            direction = 0
+            direction_command = 0
+            blinky_x = 56
+            blinky_y = 58
+            blinky_direction = 0
+            inky_x = 440
+            inky_y = 388
+            inky_direction = 2
+            pinky_x = 440
+            pinky_y = 438
+            pinky_direction = 2
+            clyde_x = 440
+            clyde_y = 438
+            clyde_direction = 2
+            eaten_ghost = [False, False, False, False]
+            blinky_dead = False
+            inky_dead = False
+            clyde_dead = False
+            pinky_dead = False
+        else:
+            game_over = True
+            moving = False
+            startup_counter = 0
+            
+    if powerup and player_circle.colliderect(blinky.rect) and not blinky.dead and not eaten_ghost[0]:
+        blinky_dead = True
+        eaten_ghost[0] = True
+        score += (2 ** eaten_ghost.count(True)) * 100
+    if powerup and player_circle.colliderect(inky.rect) and not inky.dead and not eaten_ghost[1]:
+        inky_dead = True
+        eaten_ghost[1] = True
+        score += (2 ** eaten_ghost.count(True)) * 100
+    if powerup and player_circle.colliderect(pinky.rect) and not pinky.dead and not eaten_ghost[2]:
+        pinky_dead = True
+        eaten_ghost[2] = True
+        score += (2 ** eaten_ghost.count(True)) * 100
+    if powerup and player_circle.colliderect(clyde.rect) and not clyde.dead and not eaten_ghost[3]:
+        clyde_dead = True
+        eaten_ghost[3] = True
+        score += (2 ** eaten_ghost.count(True)) * 100
+        
+        
+        
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                direction_command = 0
+            if event.key == pygame.K_LEFT:
+                direction_command = 1
+            if event.key == pygame.K_UP:
+                direction_command = 2
+            if event.key == pygame.K_DOWN:
+                direction_command = 3
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                if game_over or game_won:
+                    powerup = False
+                    power_counter = 0
+                    startup_counter = 0
+                    player_x = 450
+                    player_y = 663
+                    direction = 0
+                    direction_command = 0
+                    blinky_x = 56
+                    blinky_y = 58
+                    blinky_direction = 0
+                    inky_x = 440
+                    inky_y = 388
+                    inky_direction = 2
+                    pinky_x = 440
+                    pinky_y = 438
+                    pinky_direction = 2
+                    clyde_x = 440
+                    clyde_y = 438
+                    clyde_direction = 2
+                    eaten_ghost = [False, False, False, False]
+                    blinky_dead = False
+                    inky_dead = False
+                    clyde_dead = False
+                    pinky_dead = False
+                    score = 0
+                    lives = 3  
+                    level = copy.deepcopy(boards)
+                    game_over = False
+                    game_won = False
+
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and direction_command == 0:
@@ -1248,8 +1296,8 @@ while run:
         clyde_dead = False
                 
                 
-    elif event.type == pygame.RESIZABLE:
-        screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+    # elif event.type == pygame.RESIZABLE:
+    #     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
   
     # guys that code to define the width and the height of the page 
