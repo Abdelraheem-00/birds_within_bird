@@ -13,7 +13,7 @@ SCREEN_WIDTH = info.current_w
 SCREEN_HEIGHT = info.current_h
 
 screen = pygame.display.set_mode((1200 , 900), pygame.RESIZABLE)
-pygame.display.set_caption("parallex")
+pygame.display.set_caption("birds Within Birds")
 
 scroll = 0
 scroll_speed = 1.5
@@ -22,7 +22,6 @@ ground_image = pygame.image.load("main_assets/ground.png").convert_alpha()
 ground_image = pygame.transform.scale(ground_image, (SCREEN_WIDTH, SCREEN_HEIGHT // 4))
 ground_width = ground_image.get_width()
 ground_height = ground_image.get_height()
-# button_hover_sound = pygame.mixer.Sound("main_assets/tunetank.com_select-option.wav") 
 button_click_sound = pygame.mixer.Sound("main_assets/tunetank.com_menu-option-hover.wav") 
 
 
@@ -134,9 +133,27 @@ while run:
     draw_bg()
     draw_ground()
     menu_font = pygame.font.Font("freesansbold.ttf", 70)
+    games_font = pygame.font.Font("freesansbold.ttf", 50)
+    
+    
     menu_text = menu_font.render("Birds Within Bird", True, "#ffffff")
     menu_rect = menu_text.get_rect(center=(screen_width // 2, screen_height // 6))
+    
+    bird_text = games_font.render("Angry Bird", True, "#ffffff")
+    bird_rect = bird_text.get_rect(center=(screen_width  // 4, screen_height // 1.55 ))
+    
+    pacman_text = games_font.render("Pacman", True, "#ffffff")
+    pacman_rect = pacman_text.get_rect(center=(screen_width  // 2, screen_height // 1.55 ))
+    
+    maze_text = games_font.render("Maze", True, "#ffffff")
+    maze_rect = maze_text.get_rect(center=(3 * screen_width // 4, screen_height // 1.55))
+    
+    
     screen.blit(menu_text, menu_rect)
+    screen.blit(bird_text, bird_rect)
+    screen.blit(pacman_text, pacman_rect)
+    screen.blit(maze_text, maze_rect)
+
     bird_button = Button("main_assets/birds3.png", (200, 200))
     pacman_button = Button("main_assets/baaaac.png", (200, 200))    
     maze_button = Button("main_assets/maze4.png", (200, 200))
