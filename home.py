@@ -104,6 +104,16 @@ def run_bird_file():
     finally:
         load_music() 
         
+def run_maze_file():
+    pygame.mixer.music.stop()  
+    pygame.mixer.Sound.play(button_click_sound)
+    try:
+        subprocess.run(["python3.10", "main_maze.py"], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running main_maze.py: {e}")
+    finally:
+        load_music() 
+        
         
 
 
@@ -129,15 +139,17 @@ while run:
     screen.blit(menu_text, menu_rect)
     bird_button = Button("main_assets/birds3.png", (200, 200))
     pacman_button = Button("main_assets/baaaac.png", (200, 200))    
-    exit_button = Button("pacman_Assets/ghost_images/blue.png", (150, 150))
+    maze_button = Button("main_assets/maze4.png", (200, 200))
+    
+    
     
     bird_pos = (screen_width // 4, screen_height // 2)
     pacman_pos = (screen_width // 2, screen_height // 2)
-    exit_pos = (3 * screen_width // 4, screen_height // 2)
+    maze_pos = (3 * screen_width // 4, screen_height // 2)
 
     bird_button.draw(screen, mouse_pos, bird_pos)
     pacman_button.draw(screen, mouse_pos, pacman_pos)
-    exit_button.draw(screen, mouse_pos, exit_pos)
+    maze_button.draw(screen, mouse_pos, maze_pos)
 
     scroll += scroll_speed
     
@@ -156,9 +168,9 @@ while run:
                     run_pacman_file()
                 if bird_button.is_clicked(mouse_pos):
                     run_bird_file()
-                elif exit_button.is_clicked(mouse_pos):
-                    pygame.quit()
-                    sys.exit()
+                if maze_button.is_clicked(mouse_pos):
+                    run_maze_file()
+                    
     pygame.display.update()
 
 pygame.quit()        
