@@ -43,7 +43,7 @@ bash
 
 cd AI_project
 Run the main launcher:
-bash
+```bash
 Copy code
 python home.py
 Packaging the Game
