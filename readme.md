@@ -44,8 +44,8 @@ bash
 cd AI_project
 Run the main launcher:
 ```bash
-Copy code
 python home.py
+```
 Packaging the Game
 To create an executable file for easy sharing:
 
