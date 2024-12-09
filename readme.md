@@ -30,14 +30,14 @@ Installation
 Prerequisites
 Python 3.10 or later installed on your system.
 pygame library installed. Run:
-bash
-Copy code
+```bash
 pip install pygame
+```
 Steps to Run
 Clone the repository:
-bash
-Copy code
+```bash
 git clone https://github.com/Abdelraheem-00/AI_project.git
+```
 Navigate to the project folder:
 bash
 
@@ -48,13 +48,12 @@ python home.py
 ```
 Packaging the Game
 To create an executable file for easy sharing:
-
 Install pyinstaller:
-bash
-Copy code
+```bash
 pip install pyinstaller
+```
 Create the executable with a custom icon:
-bash
-Copy code
+```bash
 pyinstaller home.py --onefile
+```
 The executable file will be in the dist
