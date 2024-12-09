@@ -2,7 +2,7 @@
 * Welcome to Birds Within Bird, a project that combines three thrilling games into one:
 * Angry Birds, Pacman, and Maze Runner. Get ready to dive into fun, challenges, and nostalgia!
 #
- Angry Birds: Aim, launch, and knock down obstacles!
+* Angry Birds: Aim, launch, and knock down obstacles!
 #
 * Pacman: Navigate the maze and gobble up pellets while avoiding ghosts.
 #
