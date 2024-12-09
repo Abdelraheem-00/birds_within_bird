@@ -17,24 +17,24 @@ Optimized for Different Screens: Responsive design to fit various screen resolut
  Games
 #
 1. Angry Birds 🐦
-Launch your bird and destroy obstacles in this physics-based game.
-Controls:
-Drag and release the bird to launch it.
+* Launch your bird and destroy obstacles in this physics-based game.
+* Controls:
+* Drag and release the bird to launch it.
 #
 2. Pacman 👻
-Navigate the maze, collect points, and avoid enemies.
-Controls:
-Arrow keys to move.
+* Navigate the maze, collect points, and avoid enemies.
+* Controls:
+* Arrow keys to move.
 #
 3. Maze Runner 🌀
- Find your way through the maze as quickly as possible!
- Controls:
-Arrow keys to navigate the maze.
+*  Find your way through the maze as quickly as possible!
+*  Controls:
+* Arrow keys to navigate the maze.
 #
-Installation
-Prerequisites
-Python 3.10 or later installed on your system.
-pygame library installed. Run:
+* Installation
+* Prerequisites
+* Python 3.10 or later installed on your system.
+* pygame library installed. Run:
 ```bash
 pip install pygame
 ```
@@ -52,9 +52,9 @@ Run the main launcher:
 ```bash
 python home.py
 ```
-Packaging the Game
-To create an executable file for easy sharing:
-Install pyinstaller:
+* Packaging the Game
+* To create an executable file for easy sharing:
+* Install pyinstaller:
 ```bash
 pip install pyinstaller
 ```
