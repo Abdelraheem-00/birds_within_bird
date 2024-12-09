@@ -8,30 +8,31 @@
 #
 * Maze Runner: Find your way through challenging mazes.
 #
-* Features
-Interactive Menu: A visually appealing main menu to select games.
-Parallax Backgrounds: Smooth scrolling effects for dynamic visuals.
-Custom Sounds and Music: Immersive audio experience for each game.
-Optimized for Different Screens: Responsive design to fit various screen resolutions.
+# ✨ Features
+* 🖥️ Interactive Menu: A visually engaging menu to select your game.
+* 🌌 Parallax Backgrounds: Dynamic visuals with smooth scrolling effects.
+* 🎵 Custom Sounds and Music: Enhance your experience with immersive audio.
+* 📱 Responsive Design: Optimized for different screen resolutions for a seamless experience.
+
 #
- Games
+# 🎲 Games
 #
 1. Angry Birds 🐦
 * Launch your bird and destroy obstacles in this physics-based game.
 * Controls:
-* Drag and release the bird to launch it.
+*     🖱️ Drag and release to launch the bird.
 #
 2. Pacman 👻
 * Navigate the maze, collect points, and avoid enemies.
 * Controls:
-* Arrow keys to move.
+*     ⬆️⬇️➡️⬅️ Use arrow keys to move.
 #
 3. Maze Runner 🌀
 *  Find your way through the maze as quickly as possible!
 *  Controls:
-* Arrow keys to navigate the maze.
+*     ⬆️⬇️➡️⬅️ Use arrow keys to navigate..
 #
-* Installation
+# 🛠️ Installation
 * Prerequisites
 * Python 3.10 or later installed on your system.
 * pygame library installed. Run:
@@ -52,7 +53,7 @@ Run the main launcher:
 ```bash
 python home.py
 ```
-* Packaging the Game
+# 📦 Packaging the Game
 * To create an executable file for easy sharing:
 * Install pyinstaller:
 ```bash
