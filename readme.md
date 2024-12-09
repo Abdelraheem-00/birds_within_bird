@@ -20,17 +20,17 @@
 1. Angry Birds 🐦
 * Launch your bird and destroy obstacles in this physics-based game.
 * Controls:
-*     🖱️ Drag and release to launch the bird.
+* 🖱️ Drag and release to launch the bird.
 #
 2. Pacman 👻
 * Navigate the maze, collect points, and avoid enemies.
 * Controls:
-*     ⬆️⬇️➡️⬅️ Use arrow keys to move.
+* ⬆️⬇️➡️⬅️ Use arrow keys to move.
 #
 3. Maze Runner 🌀
 *  Find your way through the maze as quickly as possible!
 *  Controls:
-*     ⬆️⬇️➡️⬅️ Use arrow keys to navigate..
+*  ⬆️⬇️➡️⬅️ Use arrow keys to navigate..
 #
 # 🛠️ Installation
 * Prerequisites
