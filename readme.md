@@ -40,8 +40,9 @@ git clone https://github.com/Abdelraheem-00/AI_project.git
 ```
 Navigate to the project folder:
 bash
-
+```bash
 cd AI_project
+```
 Run the main launcher:
 ```bash
 python home.py
