@@ -2,7 +2,7 @@ from maze import *
 
 class Food:
     def __init__(self):
-        self.img = pygame.image.load('maze_assets/UtopiaDonut.webp').convert_alpha()
+         self.img = pygame.image.load('resources\images\pig_failed.png').convert_alpha()
         self.img = pygame.transform.scale(self.img, (TILE - 10, TILE - 10))
         self.rect = self.img.get_rect()
         self.set_pos()
@@ -63,7 +63,7 @@ surface = pygame.display.set_mode((WIDTH + 300, HEIGHT))
 clock = pygame.time.Clock()
 
 # images
-bg_game = pygame.image.load('maze_assets/Seq600_redhut_V8_JC.jpg').convert()
+bg_game = pygame.image.load('resources/images/background2.jpg').convert()
 bg = pygame.image.load('maze_assets/21191 .jpg').convert()
 
 # get maze
