@@ -25,10 +25,8 @@ for i in range(1, 5):
 pinky_img = pygame.transform.scale(pygame.image.load(f'resources\images\pig_failed.png'), (55, 55))
 inky_img = pygame.transform.scale(pygame.image.load(f'resources\images\pig_failed.png'),  (55, 55))
 clyde_img = pygame.transform.scale(pygame.image.load(f'resources\images\pig_failed.png'),(55, 55))
-spooked_img = pygame.transform.scale(pygame.image.load(f'pacman_Assets/ghost_images/powerup.png'), (55, 55))
-dead_img = pygame.transform.scale(pygame.image.load(f'pacman_Assets/ghost_images/dead.png'), (55, 55))
-
-
+spooked_img = pygame.transform.scale(pygame.image.load(f'resources/powerup.png'), (55, 55))
+dead_img = pygame.transform.scale(pygame.image.load(f'resources/dead.png'), (55, 55))
 player_x = 450
 player_y = 663
 direction = 0
