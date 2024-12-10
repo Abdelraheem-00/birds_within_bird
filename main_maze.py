@@ -71,7 +71,7 @@ maze = generate_maze()
 
 # player settings
 player_speed = 5
-player_img = pygame.image.load('maze_assets/RedBirdToons.webp').convert_alpha()
+player_img = pygame.image.load('resources/images/red-bird.png').convert_alpha()
 player_img = pygame.transform.scale(player_img, (TILE - 2 * maze[0].thickness, TILE - 2 * maze[0].thickness))
 player_rect = player_img.get_rect()
 player_rect.center = TILE // 2, TILE // 2
