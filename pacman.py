@@ -550,6 +550,14 @@ class Ghost:
 
 
     
+    def draw_inky_path(self, screen):
+        pygame.draw.line(
+            screen,  
+            (0, 255, 255), 
+            (self.x_pos, self.y_pos), 
+            self.target, 
+            2 
+        )
   
 
     def move_pinky(self):
@@ -991,6 +999,7 @@ while run:
                    blinky_box, 0)
     inky = Ghost(inky_x, inky_y, targets[1], ghost_speeds[1], inky_img, inky_direction, inky_dead,
                  inky_box, 1)
+    inky.draw_inky_path(screen)
     pinky = Ghost(pinky_x, pinky_y, targets[2], ghost_speeds[2], pinky_img, pinky_direction, pinky_dead,
                   pinky_box, 2)
     clyde = Ghost(clyde_x, clyde_y, targets[3], ghost_speeds[3], clyde_img, clyde_direction, clyde_dead,

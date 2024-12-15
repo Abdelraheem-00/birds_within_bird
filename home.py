@@ -83,6 +83,8 @@ def draw_ground():
    for x in range(15):
       screen.blit(ground_image, ((x * ground_width) - scroll * 2.2, SCREEN_HEIGHT - ground_height))
 
+
+
 def run_pacman_file():
     pygame.mixer.music.stop()  
     pygame.mixer.Sound.play(button_click_sound)
@@ -92,6 +94,8 @@ def run_pacman_file():
         print(f"Error running pacman.py: {e}")
     finally:
         load_music() 
+        
+        
         
 def run_bird_file():
     pygame.mixer.music.stop()  
