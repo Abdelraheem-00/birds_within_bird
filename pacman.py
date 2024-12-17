@@ -313,7 +313,15 @@ class Ghost:
         elif self.x_pos > 900:
             self.x_pos - 30
         return self.x_pos, self.y_pos, self.direction
-    
+
+    def draw_clyde_path(self, screen):
+        pygame.draw.line(
+            screen,  
+            (0, 255, 255), 
+            (self.x_pos, self.y_pos), 
+            self.target, 
+            2 
+        )    
     
     
     
@@ -424,6 +432,14 @@ class Ghost:
         return self.x_pos, self.y_pos, self.direction
 
 
+    def draw_blinky_path(self, screen):
+        pygame.draw.line(
+            screen,  
+            (0, 255, 255), 
+            (self.x_pos, self.y_pos), 
+            self.target, 
+            2 
+        )
 
    
     def move_inky(self):
@@ -685,7 +701,14 @@ class Ghost:
             self.x_pos - 30
         return self.x_pos, self.y_pos, self.direction
 
-
+    def draw_pinky_path(self, screen):
+        pygame.draw.line(
+            screen,  
+            (0, 255, 255), 
+            (self.x_pos, self.y_pos), 
+            self.target, 
+            2 
+        )
         
 def draw_misc():
     score_text = font.render(f'Score: {score}', True, 'white')
@@ -997,13 +1020,18 @@ while run:
     draw_player()
     blinky = Ghost(blinky_x, blinky_y, targets[0], ghost_speeds[0], blinky_img, blinky_direction, blinky_dead,
                    blinky_box, 0)
+    blinky.draw_inky_path(screen)
     inky = Ghost(inky_x, inky_y, targets[1], ghost_speeds[1], inky_img, inky_direction, inky_dead,
                  inky_box, 1)
     inky.draw_inky_path(screen)
     pinky = Ghost(pinky_x, pinky_y, targets[2], ghost_speeds[2], pinky_img, pinky_direction, pinky_dead,
                   pinky_box, 2)
+    pinky.draw_inky_path(screen)
+    
     clyde = Ghost(clyde_x, clyde_y, targets[3], ghost_speeds[3], clyde_img, clyde_direction, clyde_dead,
                   clyde_box, 3)
+    clyde.draw_inky_path(screen)
+    
     draw_misc()
     targets = get_targets(blinky_x, blinky_y, inky_x, inky_y, pinky_x, pinky_y, clyde_x, clyde_y)
 
