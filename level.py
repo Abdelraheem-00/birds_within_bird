@@ -1,6 +1,5 @@
-from characters import Pig
+from characters import Pig, Bird, Node, a_star
 from polygon import Polygon
-
 
 class Level():
     def __init__(self, pigs, columns, beams, space):
@@ -57,6 +56,15 @@ class Level():
             p = (x, y+85+i*85)
             self.columns.append(Polygon(p, 20, 85, self.space))
 
+    def move_bird_to_target(self, bird, target_position, grid):
+        start = Node((int(bird.body.position.x), int(bird.body.position.y)))
+        end = Node(target_position)
+        path = a_star(start, end, grid)
+        
+        if path:
+            for position in path:
+                bird.body.position = position
+
     def build_0(self):
         """level 0"""
         pig1 = Pig(980, 100, self.space)
@@ -91,8 +99,6 @@ class Level():
         p = (850, 80)
         self.columns.append(Polygon(p, 20, 85, self.space))
         p = (850, 150)
-        self.columns.append(Polygon(p, 20, 85, self.space))
-        p = (1050, 150)
         self.columns.append(Polygon(p, 20, 85, self.space))
         p = (1105, 210)
         self.beams.append(Polygon(p, 85, 20, self.space))
