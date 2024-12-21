@@ -3,30 +3,81 @@ import sys
 import math
 import time
 import pygame
-current_path = os.getcwd()
 import pymunk as pm
 from characters import Bird
 from level import Level
 
+# algorithm A*
+import heapq
+
+class Node:
+    def __init__(self, position, parent=None):
+        self.position = position
+        self.parent = parent
+        self.g = 0
+        self.h = 0
+        self.f = 0
+
+    def __eq__(self, other):
+        return self.position == other.position
+
+    def __lt__(self, other):
+        return self.f < other.f
+
+def a_star(start, end, grid):
+    open_list = []
+    closed_list = []
+    heapq.heappush(open_list, start)
+    
+    while open_list:
+        current_node = heapq.heappop(open_list)
+        closed_list.append(current_node)
+        
+        if current_node == end:
+            path = []
+            while current_node:
+                path.append(current_node.position)
+                current_node = current_node.parent
+            return path[::-1]
+        
+        children = []
+        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
+            node_position = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
+            
+            if node_position[0] > (len(grid) - 1) or node_position[0] < 0 or node_position[1] > (len(grid[len(grid)-1]) - 1) or node_position[1] < 0:
+                continue
+            
+            if grid[node_position[0]][node_position[1]] != 0:
+                continue
+            
+            new_node = Node(node_position, current_node)
+            children.append(new_node)
+        
+        for child in children:
+            if child in closed_list:
+                continue
+            
+            child.g = current_node.g + 1
+            child.h = ((child.position[0] - end.position[0]) ** 2) + ((child.position[1] - end.position[1]) ** 2)
+            child.f = child.g + child.h
+            
+            if len([i for i in open_list if child == i and child.g > i.g]) > 0:
+                continue
+            
+            heapq.heappush(open_list, child)
 
 pygame.init()
 screen = pygame.display.set_mode((1200, 650))
 redbird = pygame.image.load("resources/images/red-bird3.png").convert_alpha()
-background2 = pygame.image.load(
-    "resources/images/background3.png").convert_alpha()
-sling_image = pygame.image.load(
-    "resources/images/sling-3.png").convert_alpha()
-full_sprite = pygame.image.load(
-    "resources/images/full-sprite.png").convert_alpha()
+background2 = pygame.image.load("resources/images/background3.png").convert_alpha()
+sling_image = pygame.image.load("resources/images/sling-3.png").convert_alpha()
+full_sprite = pygame.image.load("resources/images/full-sprite.png").convert_alpha()
 rect = pygame.Rect(181, 1050, 50, 50)
 cropped = full_sprite.subsurface(rect).copy()
 pig_image = pygame.transform.scale(cropped, (30, 30))
-buttons = pygame.image.load(
-    "resources/images/selected-buttons.png").convert_alpha()
-pig_happy = pygame.image.load(
-    "resources/images/pig_failed.png").convert_alpha()
-stars = pygame.image.load(
-    "resources/images/stars-edited.png").convert_alpha()
+buttons = pygame.image.load("resources/images/selected-buttons.png").convert_alpha()
+pig_happy = pygame.image.load("resources/images/pig_failed.png").convert_alpha()
+stars = pygame.image.load("resources/images/stars-edited.png").convert_alpha()
 rect = pygame.Rect(0, 0, 200, 200)
 star1 = stars.subsurface(rect).copy()
 rect = pygame.Rect(204, 0, 200, 200)
@@ -44,6 +95,7 @@ rect = pygame.Rect(18, 212, 100, 100)
 play_button = buttons.subsurface(rect).copy()
 clock = pygame.time.Clock()
 running = True
+
 # the base of the physics
 space = pm.Space()
 space.gravity = (0.0, -700.0)
@@ -84,8 +136,8 @@ wall = False
 
 # Static floor
 static_body = pm.Body(body_type=pm.Body.STATIC)
-static_lines = [pm.Segment(static_body, (0.0, 060.0), (1200.0, 060.0), 0.0)]
-static_lines1 = [pm.Segment(static_body, (1200.0, 060.0), (1200.0, 800.0), 0.0)]
+static_lines = [pm.Segment(static_body, (0.0, 60.0), (1200.0, 60.0), 0.0)]
+static_lines1 = [pm.Segment(static_body, (1200.0, 60.0), (1200.0, 800.0), 0.0)]
 for line in static_lines:
     line.elasticity = 0.95
     line.friction = 1
@@ -98,30 +150,24 @@ space.add(static_body)
 for line in static_lines:
     space.add(line)
 
-
 def to_pygame(p):
     """Convert pymunk to pygame coordinates"""
     return int(p.x), int(-p.y+600)
 
-
 def vector(p0, p1):
-    """Return the vector of the points
-    p0 = (xo,yo), p1 = (x1,y1)"""
+    """Return the vector of the points p0=(xo, yo), p1=(x1, y1)"""
     a = p1[0] - p0[0]
     b = p1[1] - p0[1]
     return (a, b)
 
-
 def unit_vector(v):
-    """Return the unit vector of the points
-    v = (a,b)"""
-    h = ((v[0]**2)+(v[1]**2))**0.5
+    """Return the unit vector of the points v=(a, b)"""
+    h = ((v[0]**2) + (v[1]**2))**0.5
     if h == 0:
         h = 0.000000000000001
     ua = v[0] / h
     ub = v[1] / h
     return (ua, ub)
-
 
 def distance(xo, yo, x, y):
     """distance between points"""
@@ -130,13 +176,11 @@ def distance(xo, yo, x, y):
     d = ((dx ** 2) + (dy ** 2)) ** 0.5
     return d
 
-
 def load_music():
     """Load the music"""
     song1 = 'resources/sounds/angry-birds.ogg'
     pygame.mixer.music.load(song1)
     pygame.mixer.music.play(-1)
-
 
 def sling_action():
     """Set up sling behavior"""
@@ -168,6 +212,8 @@ def sling_action():
     else:
         mouse_distance += 10
         pu3 = (uv1*mouse_distance+sling_x, uv2*mouse_distance+sling_y)
+        pygame.draw.line(screen, (0, 0, 0), (sling2_x, sling2_y), pu3, 5)
+        screen.blit(redbird, (x_redbird, y_redbird))
         pygame.draw.line(screen, (0, 0, 0), (sling2_x, sling2_y), pu3, 5)
         screen.blit(redbird, (x_redbird, y_redbird))
         pygame.draw.line(screen, (0, 0, 0), (sling_x, sling_y), pu3, 5)
