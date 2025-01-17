@@ -322,146 +322,146 @@ class Ghost:
             self.target, 
             4 
         )    
-    # def move_blinky(self):
-    #     # r, l, u, d
-    #     # blinky is going to turn whenever colliding with walls, otherwise continue straight
-    #     if self.direction == 0:
-    #         if self.target[0] > self.x_pos and self.turns[0]:
-    #             self.x_pos += self.speed
-    #         elif not self.turns[0]:
-    #             if self.target[1] > self.y_pos and self.turns[3]:
-    #                 self.direction = 3
-    #                 self.y_pos += self.speed
-    #             elif self.target[1] < self.y_pos and self.turns[2]:
-    #                 self.direction = 2
-    #                 self.y_pos -= self.speed
-    #             elif self.target[0] < self.x_pos and self.turns[1]:
-    #                 self.direction = 1
-    #                 self.x_pos -= self.speed
-    #             elif self.turns[3]:
-    #                 self.direction = 3
-    #                 self.y_pos += self.speed
-    #             elif self.turns[2]:
-    #                 self.direction = 2
-    #                 self.y_pos -= self.speed
-    #             elif self.turns[1]:
-    #                 self.direction = 1
-    #                 self.x_pos -= self.speed
-    #         elif self.turns[0]:
-    #             self.x_pos += self.speed
-    #     elif self.direction == 1:
-    #         if self.target[0] < self.x_pos and self.turns[1]:
-    #             self.x_pos -= self.speed
-    #         elif not self.turns[1]:
-    #             if self.target[1] > self.y_pos and self.turns[3]:
-    #                 self.direction = 3
-    #                 self.y_pos += self.speed
-    #             elif self.target[1] < self.y_pos and self.turns[2]:
-    #                 self.direction = 2
-    #                 self.y_pos -= self.speed
-    #             elif self.target[0] > self.x_pos and self.turns[0]:
-    #                 self.direction = 0
-    #                 self.x_pos += self.speed
-    #             elif self.turns[3]:
-    #                 self.direction = 3
-    #                 self.y_pos += self.speed
-    #             elif self.turns[2]:
-    #                 self.direction = 2
-    #                 self.y_pos -= self.speed
-    #             elif self.turns[0]:
-    #                 self.direction = 0
-    #                 self.x_pos += self.speed
-    #         elif self.turns[1]:
-    #             self.x_pos -= self.speed
-    #     elif self.direction == 2:
-    #         if self.target[1] < self.y_pos and self.turns[2]:
-    #             self.direction = 2
-    #             self.y_pos -= self.speed
-    #         elif not self.turns[2]:
-    #             if self.target[0] > self.x_pos and self.turns[0]:
-    #                 self.direction = 0
-    #                 self.x_pos += self.speed
-    #             elif self.target[0] < self.x_pos and self.turns[1]:
-    #                 self.direction = 1
-    #                 self.x_pos -= self.speed
-    #             elif self.target[1] > self.y_pos and self.turns[3]:
-    #                 self.direction = 3
-    #                 self.y_pos += self.speed
-    #             elif self.turns[3]:
-    #                 self.direction = 3
-    #                 self.y_pos += self.speed
-    #             elif self.turns[0]:
-    #                 self.direction = 0
-    #                 self.x_pos += self.speed
-    #             elif self.turns[1]:
-    #                 self.direction = 1
-    #                 self.x_pos -= self.speed
-    #         elif self.turns[2]:
-    #             self.y_pos -= self.speed
-    #     elif self.direction == 3:
-    #         if self.target[1] > self.y_pos and self.turns[3]:
-    #             self.y_pos += self.speed
-    #         elif not self.turns[3]:
-    #             if self.target[0] > self.x_pos and self.turns[0]:
-    #                 self.direction = 0
-    #                 self.x_pos += self.speed
-    #             elif self.target[0] < self.x_pos and self.turns[1]:
-    #                 self.direction = 1
-    #                 self.x_pos -= self.speed
-    #             elif self.target[1] < self.y_pos and self.turns[2]:
-    #                 self.direction = 2
-    #                 self.y_pos -= self.speed
-    #             elif self.turns[2]:
-    #                 self.direction = 2
-    #                 self.y_pos -= self.speed
-    #             elif self.turns[0]:
-    #                 self.direction = 0
-    #                 self.x_pos += self.speed
-    #             elif self.turns[1]:
-    #                 self.direction = 1
-    #                 self.x_pos -= self.speed
-    #         elif self.turns[3]:
-    #             self.y_pos += self.speed
-    #     if self.x_pos < -30:
-    #         self.x_pos = 900
-    #     elif self.x_pos > 900:
-    #         self.x_pos - 30
-    #     return self.x_pos, self.y_pos, self.direction
-    
-    
-    
     def move_blinky(self):
-        possible_moves = {
-            0: (self.x_pos + self.speed, self.y_pos),  
-            1: (self.x_pos - self.speed, self.y_pos), 
-            2: (self.x_pos, self.y_pos - self.speed), 
-            3: (self.x_pos, self.y_pos + self.speed),  
-        }
-
-        distances = {
-            direction: abs(pos[0] - self.target[0]) + abs(pos[1] - self.target[1])
-            for direction, pos in possible_moves.items()
-            if self.turns[direction]  
-        }
-
-        if distances:
-            self.direction = min(distances, key=distances.get)
-
-        if self.direction == 0:  
-            self.x_pos += self.speed
-        elif self.direction == 1:  
-            self.x_pos -= self.speed
-        elif self.direction == 2: 
-            self.y_pos -= self.speed
-        elif self.direction == 3:  
-            self.y_pos += self.speed
-
+        # r, l, u, d
+        # blinky is going to turn whenever colliding with walls, otherwise continue straight
+        if self.direction == 0:
+            if self.target[0] > self.x_pos and self.turns[0]:
+                self.x_pos += self.speed
+            elif not self.turns[0]:
+                if self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+            elif self.turns[0]:
+                self.x_pos += self.speed
+        elif self.direction == 1:
+            if self.target[0] < self.x_pos and self.turns[1]:
+                self.x_pos -= self.speed
+            elif not self.turns[1]:
+                if self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+            elif self.turns[1]:
+                self.x_pos -= self.speed
+        elif self.direction == 2:
+            if self.target[1] < self.y_pos and self.turns[2]:
+                self.direction = 2
+                self.y_pos -= self.speed
+            elif not self.turns[2]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+            elif self.turns[2]:
+                self.y_pos -= self.speed
+        elif self.direction == 3:
+            if self.target[1] > self.y_pos and self.turns[3]:
+                self.y_pos += self.speed
+            elif not self.turns[3]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+            elif self.turns[3]:
+                self.y_pos += self.speed
         if self.x_pos < -30:
             self.x_pos = 900
         elif self.x_pos > 900:
-            self.x_pos = -30
-
+            self.x_pos - 30
         return self.x_pos, self.y_pos, self.direction
+    
+    
+    
+    # def move_blinky(self):
+    #     possible_moves = {
+    #         0: (self.x_pos + self.speed, self.y_pos),  
+    #         1: (self.x_pos - self.speed, self.y_pos), 
+    #         2: (self.x_pos, self.y_pos - self.speed), 
+    #         3: (self.x_pos, self.y_pos + self.speed),  
+    #     }
+
+    #     distances = {
+    #         direction: abs(pos[0] - self.target[0]) + abs(pos[1] - self.target[1])
+    #         for direction, pos in possible_moves.items()
+    #         if self.turns[direction]  
+    #     }
+
+    #     if distances:
+    #         self.direction = min(distances, key=distances.get)
+
+    #     if self.direction == 0:  
+    #         self.x_pos += self.speed
+    #     elif self.direction == 1:  
+    #         self.x_pos -= self.speed
+    #     elif self.direction == 2: 
+    #         self.y_pos -= self.speed
+    #     elif self.direction == 3:  
+    #         self.y_pos += self.speed
+
+    #     if self.x_pos < -30:
+    #         self.x_pos = 900
+    #     elif self.x_pos > 900:
+    #         self.x_pos = -30
+
+    #     return self.x_pos, self.y_pos, self.direction
 
 
 
@@ -1053,7 +1053,7 @@ while run:
     draw_player()
     blinky = Ghost(blinky_x, blinky_y, targets[0], ghost_speeds[0], blinky_img, blinky_direction, blinky_dead,
                    blinky_box, 0)
-    # blinky.draw_blinky_path(screen)
+    blinky.draw_blinky_path(screen)
     inky = Ghost(inky_x, inky_y, targets[1], ghost_speeds[1], inky_img, inky_direction, inky_dead,
                  inky_box, 1)
     # inky.draw_inky_path(screen)

@@ -136,6 +136,7 @@ while run:
   
     draw_bg()
     draw_ground()
+    
     menu_font = pygame.font.Font("freesansbold.ttf", 70)
     games_font = pygame.font.Font("freesansbold.ttf", 50)
     

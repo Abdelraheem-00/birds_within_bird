@@ -129,6 +129,11 @@ def generate_maze():
     return grid_cells 
 
 
+
+
+
+
+
 # grid_cells = [Cell(col, row) for row in range(rows) for col in range(cols)]
 # current_cell = grid_cells[0]
 # stack=[]

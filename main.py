@@ -66,6 +66,7 @@ def a_star(start, end, grid):
             
             heapq.heappush(open_list, child)
 
+
 pygame.init()
 screen = pygame.display.set_mode((1200, 650))
 redbird = pygame.image.load("resources/images/red-bird3.png").convert_alpha()
